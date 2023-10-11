@@ -29,9 +29,13 @@ $(document).ready(async () => {
   const homePage = $(".home");
   const formPage = $(".contact-form");
   const contactListContainer = document.querySelector(".contact-list");
-  const baseurl = document.URL.includes("192.168.8.1")
+  const rederUrl = "https://contact-app-erdk.onrender.com";
+  const baseurl = rederUrl
+    ? rederUrl
+    : document.URL.includes("192.168.8.1")
     ? "http://192.168.8.100:3600"
-    : "http://localhost:3600"; //"https://contact-app-erdk.onrender.com";
+    : "http://localhost:3600";
+
   const usersUrl = baseurl + "/contacts";
   const userUrl = baseurl + "/contacts/";
   const postUrl = baseurl + "/contact";
