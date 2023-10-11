@@ -29,7 +29,7 @@ $(document).ready(async () => {
   const homePage = $(".home");
   const formPage = $(".contact-form");
   const contactListContainer = document.querySelector(".contact-list");
-  const renderUrl = "https://contact-app-erdk.onrender.com";
+  const renderUrl = null; //"https://contact-app-erdk.onrender.com";
   const baseurl = renderUrl
     ? renderUrl
     : document.URL.includes("192.168.8.1")
@@ -41,6 +41,8 @@ $(document).ready(async () => {
   const postUrl = baseurl + "/contact";
 
   const users = await getUsers(usersUrl);
+  console.log(users);
+
   const imageInput = document.querySelector("#image-file");
   const submitBtn = document.querySelector(".save-btn");
   const imagePreview = document.querySelector(".image-preview");
