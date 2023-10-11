@@ -23,7 +23,7 @@ const sendEmail = async ({ to, subject, text, html }) => {
       service: "gmail",
       auth: {
         type: "OAuth2",
-        user: "ocaictcentre@gmail.com",
+        user: "sampleuser@mail.com",
         clientId: GMAIL_CLIENT_ID,
         clientSecret: GMAIL_CLIENT_SECRET,
         refreshToken: GMAIL_CLIENT_REFRESH_TOKEN,
@@ -32,7 +32,7 @@ const sendEmail = async ({ to, subject, text, html }) => {
     });
 
     const mailOptions = {
-      from: "OCAWEBTECH 📧 <ocaictcentre@gmail.com>",
+      from: "OCAWEBTECH 📧",
       to,
       subject,
       text,
@@ -46,9 +46,4 @@ const sendEmail = async ({ to, subject, text, html }) => {
   }
 };
 
-sendEmail({
-  to: "oluegwuc@gmail.com",
-  subject: "TEST EMAIL",
-  html: `<h2 style="color: darkcyan; padding: 10px;">This is a Test Email from Node Server</h2>`,
-});
 export default sendEmail;
