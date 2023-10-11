@@ -89,11 +89,17 @@ export const deleteContactRoute = async (req, res) => {
 };
 
 export const notFoundRoute = (req, res) => {
-  const text = {
-    success: false,
-    message: `The content you are looking for is not available`,
-  };
-  // logEvent(text.message, "logs", "404.log");
-  // logEvent(`UserAgent: ${req.headers["user-agent"]} `, "logs", "reqLog.log");
-  return res.send(text);
+  if (req.url === "/privacy.html") {
+    return res.redirect("/privacy");
+  } else if (req.url === "/terms.html") {
+    return res.redirect("/terms");
+  } else {
+    const text = {
+      success: false,
+      message: `The content you are looking for is not available`,
+    };
+    // logEvent(text.message, "logs", "404.log");
+    // logEvent(`UserAgent: ${req.headers["user-agent"]} `, "logs", "reqLog.log");
+    return res.send(text);
+  }
 };
