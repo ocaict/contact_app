@@ -129,7 +129,8 @@ app.all("*", (req, res) => {
   };
   // logEvent(text.message, "logs", "404.log");
   logEvent(`UserAgent: ${req.headers["user-agent"]} `, "logs", "reqLog.log");
-  res.send(text);
+  return;
+  // res.send(text);
 });
 
 app.use(errorHandler);
