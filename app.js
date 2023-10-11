@@ -128,9 +128,8 @@ app.all("*", (req, res) => {
       .toLocaleUpperCase()} is not available`,
   };
   // logEvent(text.message, "logs", "404.log");
-  logEvent(`UserAgent: ${req.headers["user-agent"]} `, "logs", "reqLog.log");
-  return;
-  // res.send(text);
+  // logEvent(`UserAgent: ${req.headers["user-agent"]} `, "logs", "reqLog.log");
+  return res.send(text);
 });
 
 app.use(errorHandler);

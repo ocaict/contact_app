@@ -25,6 +25,7 @@ footer {
 }
 
 .page {
+  position: relative;
   max-width: 1024px;
   margin: auto;
   background-color: $BG_COLOR;
@@ -164,8 +165,8 @@ footer {
     color: #fff;
     font-size: 30px;
     font-weight: 800;
-    position: fixed;
-    bottom: 30px;
+    position: absolute;
+    bottom: 70px;
     right: 30px;
     height: 50px;
     width: 50px;
@@ -338,7 +339,7 @@ footer {
     padding: 20px;
 
     .profile-img {
-      background-color: yellow;
+      background-color: papayawhip;
       margin: 30px auto;
       height: 130px;
       width: 130px;
@@ -421,3 +422,4 @@ footer {
     width: fit-content;
   }
 }
+
