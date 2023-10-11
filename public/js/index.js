@@ -31,7 +31,7 @@ $(document).ready(async () => {
   const contactListContainer = document.querySelector(".contact-list");
   const renderUrl = "https://contact-app-erdk.onrender.com";
   const baseurl = renderUrl
-    ? rederUrl
+    ? renderUrl
     : document.URL.includes("192.168.8.1")
     ? "http://192.168.8.100:3600"
     : "http://localhost:3600";
