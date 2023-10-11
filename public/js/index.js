@@ -29,8 +29,8 @@ $(document).ready(async () => {
   const homePage = $(".home");
   const formPage = $(".contact-form");
   const contactListContainer = document.querySelector(".contact-list");
-  const rederUrl = "https://contact-app-erdk.onrender.com";
-  const baseurl = rederUrl
+  const renderUrl = null; //"https://contact-app-erdk.onrender.com";
+  const baseurl = renderUrl
     ? rederUrl
     : document.URL.includes("192.168.8.1")
     ? "http://192.168.8.100:3600"
@@ -102,6 +102,7 @@ $(document).ready(async () => {
       confirmMessageBox.innerHTML = `
     <h2 class="title">${title}</h2>
        <p class="body">${body}</p>
+       <small class="delete-notice" style="text-align: center;"></small>
        <div class="btn-group">
          <button class="btn btn-primary round pad cancel-btn">
            Cancel
@@ -117,11 +118,11 @@ $(document).ready(async () => {
       confirmMessageBox.addEventListener("click", (e) => {
         if (e.target.className.includes("cancel-btn")) {
           resolve("cancel");
+          messageBoxOverlay.classList.add("hide");
+          confirmMessageBox.classList.add("hide");
         } else if (e.target.className.includes("yes-btn")) {
           resolve("yes");
         }
-        messageBoxOverlay.classList.add("hide");
-        confirmMessageBox.classList.add("hide");
       });
     });
   };
@@ -388,8 +389,13 @@ $(document).ready(async () => {
         `Are you sure you want to delete this contact <b><em>${contact.firstname} ${contact.lastname}</em></b>?`
       );
       if (data === "yes") {
+        $(".delete-notice").text("Deleting...");
         const result = await deleteUser(userUrl, e.target.id);
         const users = await getUsers(usersUrl);
+        $(".delete-notice").text("");
+        messageBoxOverlay.classList.add("hide");
+        confirmMessageBox.classList.add("hide");
+
         renderUsers(contactListContainer, users);
         $(".contact-form").hide();
         singleContactPage.hide();
