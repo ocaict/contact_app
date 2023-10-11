@@ -1,0 +1,7 @@
+$BIG: 26px;
+// Function
+@function random-color() {
+  $letters: "0123456789ABCDEF";
+  $color: #2030dc;
+  @return #{$color};
+}

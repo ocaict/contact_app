@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contacts</title>
+
+    <link rel="stylesheet" href="jqueryui/jquery-ui.min.css" />
+    <link rel="stylesheet" href="fontawesome-free-5.15.4-web/css/all.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="app">
+      <div class="socket-notice hide"></div>
+      <!-- Start of Home Page -->
+      <div class="home page">
+        <header class="header">
+          <div class="menu-icon"><i class="fas fa-bars"></i></div>
+          <div class="search-wrapper">
+            <input
+              type="search"
+              name="search"
+              id="search"
+              placeholder="Search Contacts"
+            />
+          </div>
+          <div class="setting">
+            <div class="menu-icon"><span class="fas fa-ellipsis-v"></span></div>
+            <img
+              src="./images/profile.png"
+              alt="Profile Image"
+              class="header-image"
+            />
+          </div>
+        </header>
+        <div class="contact-list">
+          <!-- <div class="contact">
+            <div class="logo">
+              <img src="./images/profile.png" alt="Profile Image" />
+            </div>
+            <div class="name">Drakudiya Adamu</div>
+          </div> -->
+
+          <h2 class="loader"></h2>
+        </div>
+        <div class="show-form-btn">+</div>
+        <!-- End of Home Page -->
+      </div>
+
+      <!-- start of contact form page-->
+      <div class="page contact-form hide">
+        <header>
+          <div class="left">
+            <button class="btn close-btn plain">
+              <i class="fas fa-times"></i>
+            </button>
+            <p>Create Contacts</p>
+          </div>
+          <div class="right">
+            <button class="btn save-btn plain" form="contact-form">Save</button>
+            <div class="menu-icon"><span class="fas fa-ellipsis-v"></span></div>
+          </div>
+        </header>
+        <div class="form-container">
+          <div class="logo-img">
+            <input
+              type="file"
+              name="imageurl"
+              class="image-file"
+              id="image-file"
+              accept="image/*"
+            />
+            <!-- <img src="./images/profile.png" alt="Profile Image" /> -->
+            <label for="image-file" class="file-label">
+              <p class="image-preview"><i class="fas fa-camera"></i></p
+            ></label>
+          </div>
+
+          <form class="form-body" id="contact-form">
+            <div class="form-group">
+              <input
+                type="text"
+                name="firstname"
+                id="firstname"
+                placeholder="First name"
+              />
+            </div>
+            <div class="form-group">
+              <input
+                type="text"
+                name="lastname"
+                id="lastname"
+                placeholder="Last name"
+              />
+            </div>
+            <div class="form-group">
+              <input type="tel" name="phone" id="phone" placeholder="Phone" />
+            </div>
+            <div class="form-group">
+              <input type="email" name="email" id="email" placeholder="Email" />
+            </div>
+            <div class="form-group">
+              <input
+                type="text"
+                name="address"
+                id="address"
+                placeholder="Address"
+              />
+            </div>
+            <p>Birth Day</p>
+            <div class="form-input-group">
+              <div class="form-group">
+                <label for="day">Day</label>
+                <!-- <input type="text" name="day" id="day" placeholder="5" /> -->
+                <select name="day" id="day">
+                  <option value="1" selected>1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="month">Month</label>
+                <!-- <input
+                  type="text"
+                  name="month"
+                  id="month"
+                  placeholder="December"
+                /> -->
+                <select name="month" id="month"></select>
+              </div>
+              <div class="form-group">
+                <label for="year">Year</label>
+                <select name="year" id="year"></select>
+                <!-- <input type="text" name="year" id="year" placeholder="1990" /> -->
+              </div>
+            </div>
+            <!-- jquery ui -->
+            <div class="form-group">
+              <input type="text" id="birth-day" placeholder="Birth Day" />
+            </div>
+
+            <div class="form-group">
+              <textarea name="note" id="note" placeholder="Add Note"></textarea>
+            </div>
+          </form>
+        </div>
+        <!-- END OF CONTACT FORM -->
+      </div>
+      <!-- START OF SINGLE CONTACT PAGE -->
+
+      <div class="page single-contact hide">
+        <header>
+          <button class="btn back-btn plain">
+            <i class="fas fa-arrow-left"></i>
+          </button>
+          <div class="right">
+            <span class="far fa-star"></span>
+            <span class="fas fa-ellipsis-v"></span>
+          </div>
+        </header>
+        <div class="body">
+          <div class="contact-wrapper">
+            <div class="profile-img">
+              <img class="d-block" src="./images/profile.png" alt="Drakudiya" />
+            </div>
+            <h2 class="name">Drakudiya Adamu</h2>
+            <hr />
+            <div class="btn-group">
+              <div class="group">
+                <i class="fas fa-phone"></i>
+                <p>Call</p>
+              </div>
+              <div class="group">
+                <i class="fas fa-envelope"></i>
+                <p>Text</p>
+              </div>
+              <div class="group">
+                <i class="fas fa-video"></i>
+                <p>Set Up</p>
+              </div>
+            </div>
+            <hr />
+            <div class="phone-info">
+              <div class="phone-icon"><i class="fas fa-phone"></i></div>
+              <div>
+                <p>08092629820</p>
+                <p>Mobile</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- <hr />
+          <button class="btn edit-btn pad btn-primary round d-block">
+            <i class="fas fa-edit"></i> Edit contact
+          </button> -->
+        </div>
+      </div>
+
+      <!-- Message Dialog Boxes -->
+      <div class="overlay hide"></div>
+      <div class="message-box hide"></div>
+      <div class="confirm-box hide"></div>
+    </div>
+    <script src="./socket.io/socket.io.js"></script>
+    <script src="js/jquery.js"></script>
+    <script src="jqueryui/jquery-ui.min.js"></script>
+
+    <script src="js/index.js" type="module"></script>
+  </body>
+</html>
