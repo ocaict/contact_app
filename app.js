@@ -2,7 +2,6 @@ import express from "express";
 import fs from "fs";
 import events from "events";
 const eventEmitter = new events.EventEmitter();
-
 import path from "path";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
