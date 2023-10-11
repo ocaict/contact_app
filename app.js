@@ -20,6 +20,7 @@ import DB, {
 import { errorHandler } from "./errorHandler/errorHandler.js";
 import { logEvent } from "./event.js";
 import { getIpAddress } from "./utils/getIPAddress.js";
+
 const app = express();
 
 const PORT = process.env.PORT || 3600;
