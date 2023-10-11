@@ -19,7 +19,7 @@ export const getUser = async (url, id) => {
   }
 };
 
-export const getNameInitial = (name) => name.substring(0, 1);
+export const getNameInitial = (name) => name.substring(0, 1).toUpperCase();
 
 export const renderUsers = (htmlEle, users) => {
   console.log(users);
