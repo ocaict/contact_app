@@ -11,11 +11,11 @@ import {
   updateUser,
 } from "./utils/module.js";
 
-const user = {
-  id: 1,
-  firstname: "Oluegwu",
-  lastname: "Chigozie",
-  email: "oluegwu@gmail.com",
+const currentUser = {
+  id: 2,
+  firstname: "Mafeng",
+  lastname: "Dan",
+  email: "mafeng@gmail.com",
   profile_image: "./images/profile2.png",
 };
 
@@ -64,7 +64,7 @@ $(document).ready(async () => {
     userImage.src = user.profile_image;
     userImage.title = `${user.firstname} ${user.lastname}`;
   };
-  showCurrentUser(user);
+  showCurrentUser(currentUser);
   userImage.addEventListener("click", (e) => {
     console.log(e.target.src);
   });
@@ -224,6 +224,7 @@ $(document).ready(async () => {
       day || daySelect.value
     ).toLocaleDateString();
     data.dob = dob;
+    data.userId = currentUser.id;
 
     if (!(data.firstname && data.phone))
       return showMessageBox("Error", "Add at least Conatct Name and Phone");

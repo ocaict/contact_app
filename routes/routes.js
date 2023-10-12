@@ -11,6 +11,7 @@ import { io } from "../app.js";
 
 export const addContactRoute = async (req, res) => {
   const {
+    userId,
     firstname,
     lastname,
     email,
@@ -23,6 +24,7 @@ export const addContactRoute = async (req, res) => {
   } = req.body;
   try {
     const result = await insertContact(
+      userId,
       firstname,
       lastname,
       email,

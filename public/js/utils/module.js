@@ -22,9 +22,12 @@ export const getUser = async (url, id) => {
 export const getNameInitial = (name) => name.substring(0, 1).toUpperCase();
 
 export const renderUsers = (htmlEle, users) => {
-  console.log(users);
+  if (!Array.isArray(users)) {
+    htmlEle.innerHTML = `<h2 class="error">Something went wrong</h2>`;
+    return;
+  }
   if (!users?.length) {
-    htmlEle.innerHTML = `<h2 class="error">Unable to get Users</h2>`;
+    htmlEle.innerHTML = `<h2>Add Contacts</h2>`;
     return;
   }
   let html = "";

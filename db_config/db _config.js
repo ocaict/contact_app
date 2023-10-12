@@ -2,8 +2,23 @@ import sqlite3 from "sqlite3";
 const db = new sqlite3.Database("database/contacts.db");
 
 db.run(`
+CREATE TABLE IF NOT EXISTS users (
+  user_id INTEGER PRIMARY KEY,
+  username TEXT NOT NULL UNIQUE,
+  password TEXT NOT NULL,
+  first_name TEXT,
+  last_name TEXT,
+  email TEXT NOT NULL UNIQUE,
+  imageurl TEXT,
+  dob TEXT,
+  date_registered DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+`);
+
+db.run(`
 CREATE TABLE IF NOT EXISTS contacts (
   id INTEGER PRIMARY KEY,
+  user_id INTEGER,
   firstname TEXT,
   lastname TEXT,
   email TEXT,
@@ -13,12 +28,14 @@ CREATE TABLE IF NOT EXISTS contacts (
   imageurl TEXT,
   dob TEXT,
   note TEXT,
-  date DATETIME DEFAULT CURRENT_TIMESTAMP
+  date DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(user_id)
 )
 `);
 
 // Insert Contact
 export function insertContact(
+  userId,
   firstname,
   lastname,
   email,
@@ -31,12 +48,13 @@ export function insertContact(
 ) {
   return new Promise((resolve, reject) => {
     let query = `
-      INSERT INTO contacts (firstname,lastname, email, phone, address, company, imageurl, dob, note)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO contacts (user_id,firstname,lastname, email, phone, address, company, imageurl, dob, note)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
     db.run(
       query,
       [
+        userId,
         firstname,
         lastname,
         email,
