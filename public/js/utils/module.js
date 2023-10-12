@@ -100,3 +100,23 @@ export const getRandomNumber = (colors) => {
   const randomNumber = Math.floor(Math.random() * colors.length);
   return randomNumber;
 };
+
+export const getBirthDay = (dob = "1990,1,12") => {
+  const dobInMilliseconds = new Date(dob).getTime();
+  const today = Date.now();
+  const currentYear = new Date(today).getFullYear();
+  const nextBirthday = new Date(dobInMilliseconds);
+
+  // Check if the birthday has already occurred this year
+  if (
+    nextBirthday.getMonth() < new Date(today).getMonth() ||
+    (nextBirthday.getMonth() === new Date(today).getMonth() &&
+      nextBirthday.getDate() < new Date(today).getDate())
+  ) {
+    nextBirthday.setFullYear(currentYear + 1);
+  } else {
+    nextBirthday.setFullYear(currentYear);
+  }
+  const birthday = new Date(nextBirthday).toDateString();
+  return birthday;
+};

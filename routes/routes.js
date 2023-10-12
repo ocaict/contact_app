@@ -10,7 +10,17 @@ import DB, {
 import { io } from "../app.js";
 
 export const addContactRoute = async (req, res) => {
-  const { firstname, lastname, email, phone, address, imageurl } = req.body;
+  const {
+    firstname,
+    lastname,
+    email,
+    phone,
+    address,
+    imageurl,
+    company,
+    dob,
+    note,
+  } = req.body;
   try {
     const result = await insertContact(
       firstname,
@@ -18,7 +28,10 @@ export const addContactRoute = async (req, res) => {
       email,
       phone,
       address,
-      imageurl
+      imageurl,
+      company,
+      dob,
+      note
     );
     io.emit("added_new_contact");
     return res.send({ success: true, contact: req.body });
@@ -53,8 +66,17 @@ export const getContactRoute = async (req, res) => {
 
 export const updateContactRoute = async (req, res) => {
   const { id } = req.params;
-  const { firstname, lastname, email, phone, address, company, imageurl } =
-    req.body;
+  const {
+    firstname,
+    lastname,
+    email,
+    phone,
+    address,
+    company,
+    imageurl,
+    dob,
+    note,
+  } = req.body;
   try {
     const result = await updateContact(
       id,
@@ -64,7 +86,9 @@ export const updateContactRoute = async (req, res) => {
       phone,
       address,
       company,
-      imageurl
+      imageurl,
+      dob,
+      note
     );
     console.log(result);
     io.emit("added_new_contact");

@@ -24,16 +24,29 @@ export function insertContact(
   email,
   phone,
   address,
-  imageurl
+  imageurl,
+  company,
+  dob,
+  note
 ) {
   return new Promise((resolve, reject) => {
     let query = `
-      INSERT INTO contacts (firstname,lastname, email, phone, address, imageurl)
-      VALUES (?, ?, ?, ?, ?, ?)
+      INSERT INTO contacts (firstname,lastname, email, phone, address, company, imageurl, dob, note)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
     db.run(
       query,
-      [firstname, lastname, email, phone, address, imageurl],
+      [
+        firstname,
+        lastname,
+        email,
+        phone,
+        address,
+        company,
+        imageurl,
+        dob,
+        note,
+      ],
       function (err) {
         if (err) {
           return reject("Error inserting contact:" + err.message);
@@ -43,8 +56,6 @@ export function insertContact(
     );
   });
 }
-
-// insertContact("Chigozie", "Oluegwu","chigo@gmail.com", "08092729", "Jos")
 
 // Get All Contacts
 
@@ -81,17 +92,30 @@ export function updateContact(
   phone,
   address,
   company,
-  imageurl
+  imageurl,
+  dob,
+  note
 ) {
   return new Promise((resolve, reject) => {
     let query = `
       UPDATE contacts
-      SET firstname = ?,lastname = ?, email = ?, phone = ?, address = ?, company = ?, imageurl = ?
+      SET firstname = ?,lastname = ?, email = ?, phone = ?, address = ?, company = ?, dob = ?, note = ?, imageurl = ?
       WHERE id = ?
     `;
     db.run(
       query,
-      [firstname, lastname, email, phone, address, company, imageurl, id],
+      [
+        firstname,
+        lastname,
+        email,
+        phone,
+        address,
+        company,
+        dob,
+        note,
+        imageurl,
+        id,
+      ],
       function (err) {
         if (err) {
           reject("Error updating contact:", err.message);
@@ -102,8 +126,7 @@ export function updateContact(
     );
   });
 }
-// updateContact(1, "Blessing", "Okon", "bless@gamil.com", "0709262920", "Gombe", "OcaWebTech", "./images/profile.png")
-// delete Contact
+
 export function deleteContact(id) {
   return new Promise((resolve, reject) => {
     db.run("DELETE FROM contacts WHERE id = ?", [id], function (err) {

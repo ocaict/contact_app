@@ -2,6 +2,7 @@ import {
   addUser,
   clearInputs,
   deleteUser,
+  getBirthDay,
   getNameInitial,
   getRandomNumber,
   getUser,
@@ -19,7 +20,6 @@ const user = {
 };
 
 $(document).ready(async () => {
-  $("#birth-day").datepicker();
   const socket = io();
   socket.on("deleted", async (result) => {
     const users = await getUsers(usersUrl);
@@ -41,7 +41,6 @@ $(document).ready(async () => {
   const postUrl = baseurl + "/contact";
 
   const users = await getUsers(usersUrl);
-  console.log(users);
 
   const imageInput = document.querySelector("#image-file");
   const submitBtn = document.querySelector(".save-btn");
@@ -206,7 +205,7 @@ $(document).ready(async () => {
     $(".contact-form").show();
     $(".home").hide();
   });
-  let notice = "Submiiting...";
+
   contactForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     // const formData = new FormData(contactForm)
@@ -223,7 +222,7 @@ $(document).ready(async () => {
       year || yearSelect.value,
       month || monthSelect.value,
       day || daySelect.value
-    );
+    ).toLocaleDateString();
     data.dob = dob;
 
     if (!(data.firstname && data.phone))
@@ -299,7 +298,13 @@ $(document).ready(async () => {
         : getNameInitial(user.firstname)
     }
   </div>
-  <h2 class="name">${user.firstname} ${user.lastname}</h2>
+  <h2 class="name">${user.firstname} ${user.lastname} </h2>
+  <p><strong>Address:</strong>: ${
+    user.address ? user.address : "Add Address"
+  }</p>
+  <p><strong>Work Place:</strong> ${
+    user.company ? user.company : "Add work place"
+  }</p>
   <hr />
   <div class="btn-group">
     <div class="group phone">
@@ -338,6 +343,12 @@ $(document).ready(async () => {
     </div> 
   </div>
   <hr />
+  <p class="note pad"><strong>DOB</strong>: ${
+    user.dob
+  } <br><strong>Birth Day</strong>: ${getBirthDay(user.dob)}</p>
+  <p  class="note pad"><strong>Note</strong>: ${user.note}</p>
+
+  <hr />
           <button class="btn edit-btn pad btn-primary round d-block" id="${
             user.id
           }">
@@ -364,6 +375,16 @@ $(document).ready(async () => {
     $("#email").val(user.email);
     $("#phone").val(user.phone);
     $("#address").val(user.address);
+    $("#company").val(user.company);
+    $("#note").val(user.note);
+    if (user.dob) {
+      const dob = new Date(user.dob);
+      // Dob
+      $("#year").val(dob.getFullYear());
+      $("#month").val(dob.getMonth());
+      $("#date").val(dob.getDate());
+    }
+
     if (user.imageurl) {
       imagePreview.innerHTML = `<img class="d-block" src="${user.imageurl}" alt="${user.firstname}" />`;
     } else {
