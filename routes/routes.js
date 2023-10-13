@@ -1,6 +1,6 @@
 import { logEvent } from "../event.js";
 
-import DB, {
+import {
   insertContact,
   updateContact,
   getAllContacts,

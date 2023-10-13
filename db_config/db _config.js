@@ -5,10 +5,12 @@ db.run(`
 CREATE TABLE IF NOT EXISTS users (
   user_id INTEGER PRIMARY KEY,
   username TEXT NOT NULL UNIQUE,
-  password TEXT NOT NULL,
   first_name TEXT,
   last_name TEXT,
-  email TEXT NOT NULL UNIQUE,
+  email TEXT,
+  phone TEXT,
+  password TEXT NOT NULL,
+  address TEXT,
   imageurl TEXT,
   dob TEXT,
   date_registered DATETIME DEFAULT CURRENT_TIMESTAMP

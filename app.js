@@ -20,6 +20,10 @@ import {
   notFoundRoute,
   updateContactRoute,
 } from "./routes/routes.js";
+import {
+  addUserRoute,
+  getUserRoute as logInRoute,
+} from "./routes/usersRoutes.js";
 
 const app = express();
 
@@ -41,17 +45,16 @@ app.use(express.static(path.join("public")));
 app.use(express.json({ limit: "50mb" }));
 app.use(cors({ origin: "*" }));
 
+// Contacts Routes
 app.post("/contact", addContactRoute);
-
 app.get("/contacts", getContactsRoute);
-
 app.get("/contacts/:id", getContactRoute);
-
-// Update Contact
 app.put("/contacts/:id", updateContactRoute);
-
-// Delete Route
 app.delete("/contacts/:id", deleteContactRoute);
+
+// User Routes
+app.post("/user", addUserRoute);
+app.post("/user/login", logInRoute);
 
 app.all("*", notFoundRoute);
 
