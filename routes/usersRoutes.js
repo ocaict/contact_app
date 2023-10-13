@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import crypto from "crypto";
 export const usersTokens = [];
 
-const getHTML = (username, token) => {
+const getHTML = (baseurl, username, token) => {
   const html = `
   <div>
   <h1 style="padding: 10px;">Hi ${username}, Please Verify your email account to continue</h1>
@@ -14,7 +14,7 @@ const getHTML = (username, token) => {
     padding: 8px 10px;
     color: darkcyan;
   "
-  href="http://localhost:3600/email-verification?token=${token}"
+  href="${baseurl}/email-verification?token=${token}"
   target="_blank"
 >
   Verify Now</a
@@ -127,7 +127,7 @@ export const addUserRoute = async (req, res) => {
     const emailResult = await sendEmail({
       to: email,
       subject: "Verify Your Acount",
-      html: getHTML(username, token),
+      html: getHTML("https://contact-app-erdk.onrender.com", username, token),
     });
     console.log(emailResult);
     return res.status(201).send({
