@@ -23,7 +23,7 @@ $(document).ready(async () => {
   const homePage = $(".home");
   const formPage = $(".contact-form");
   const contactListContainer = document.querySelector(".contact-list");
-  const renderUrl = "https://contact-app-erdk.onrender.com";
+  const renderUrl = null; //"https://contact-app-erdk.onrender.com";
   const baseurl = renderUrl
     ? renderUrl
     : document.URL.includes("192.168.8.1")

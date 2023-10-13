@@ -23,6 +23,7 @@ import {
 import {
   addUserRoute,
   getUserRoute as logInRoute,
+  emailVerificationRoute,
 } from "./routes/usersRoutes.js";
 
 const app = express();
@@ -55,6 +56,7 @@ app.delete("/contacts/:id", deleteContactRoute);
 // User Routes
 app.post("/user", addUserRoute);
 app.post("/user/login", logInRoute);
+app.get("/email-verification", emailVerificationRoute);
 
 app.all("*", notFoundRoute);
 

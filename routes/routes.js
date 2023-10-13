@@ -119,6 +119,10 @@ export const notFoundRoute = (req, res) => {
     return res.redirect("/privacy");
   } else if (req.url === "/terms.html") {
     return res.redirect("/terms");
+  } else if (req.url === "/error.html") {
+    return res.redirect("/error");
+  } else if (req.url === "/success.html") {
+    return res.redirect("/success");
   } else {
     const text = {
       success: false,

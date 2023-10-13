@@ -1,4 +1,30 @@
 import bcrypt from "bcrypt";
+import crypto from "crypto";
+export const usersTokens = [];
+
+const getHTML = (username, token) => {
+  const html = `
+  <div>
+  <h1 style="padding: 10px;">Hi ${username}, Please Verify your email account to continue</h1>
+  <p style="margin: 10px auto;">Please click the button below to verify your account</p>
+  <p> <a
+  style="
+    text-decoration: none;
+    font-size: 18px;
+    padding: 8px 10px;
+    color: darkcyan;
+  "
+  href="http://localhost:3600/email-verification?token=${token}"
+  target="_blank"
+>
+  Verify Now</a
+></p>
+  
+  
+  </div>
+  `;
+  return html;
+};
 
 function isValidEmail(email) {
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -27,6 +53,7 @@ import {
   getUserByUsernameOrEmailAndPassword,
   getUserByUsernameOrEmail,
 } from "../controllers/userController.js";
+import sendEmail from "../mailer/mailer.js";
 
 export const addUserRoute = async (req, res) => {
   const {
@@ -94,9 +121,18 @@ export const addUserRoute = async (req, res) => {
       dob
     );
 
+    const token = crypto.randomBytes(32).toString("hex");
+    usersTokens.push({ username, token });
+
+    const emailResult = await sendEmail({
+      to: email,
+      subject: "Verify Your Acount",
+      html: getHTML(username, token),
+    });
+    console.log(emailResult);
     return res.status(201).send({
       success: true,
-      message: result,
+      message: "Please Verify Your Email",
     });
   } catch (error) {
     res
@@ -143,4 +179,12 @@ export const getUserRoute = async (req, res) => {
   } catch (error) {
     res.status(500).send({ success: false, message: "Server Error" });
   }
+};
+
+// Email Verification Route
+export const emailVerificationRoute = (req, res) => {
+  const token = req.query.token;
+  const foundToken = usersTokens.find((user) => user.token === token);
+  if (!foundToken) return res.redirect("/error");
+  return res.redirect("/success");
 };
