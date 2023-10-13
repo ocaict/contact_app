@@ -22,6 +22,7 @@ export const addContactRoute = async (req, res) => {
     dob,
     note,
   } = req.body;
+
   try {
     const result = await insertContact(
       userId,
@@ -47,8 +48,9 @@ export const addContactRoute = async (req, res) => {
 };
 
 export const getContactsRoute = async (req, res) => {
+  const userId = req.query.userId;
   try {
-    const contacts = await getAllContacts();
+    const contacts = await getAllContacts(userId);
     res.json({ success: true, contacts });
   } catch (error) {
     res.status(500).json({ success: false, message: "Error getting contacts" });

@@ -1,6 +1,6 @@
-export const getUsers = async (url) => {
+export const getUsers = async (url, userId) => {
   try {
-    const res = await fetch(url);
+    const res = await fetch(`${url}?userId=${userId}`);
     if (!res.ok) throw new Error("Unable to reach the server");
     const data = await res.json();
     if (data.success) return data.contacts;
@@ -9,6 +9,7 @@ export const getUsers = async (url) => {
     return err;
   }
 };
+
 export const getUser = async (url, id) => {
   try {
     const res = await fetch(url + id);

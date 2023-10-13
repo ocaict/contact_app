@@ -14,16 +14,18 @@ import {
 let currentUser = JSON.parse(localStorage.getItem("currentUser")) || null;
 
 $(document).ready(async () => {
+  let users;
   const socket = io();
   socket.on("deleted", async (result) => {
     const users = await getUsers(usersUrl);
     renderUsers(contactListContainer, users);
     $(".socket-notice").text(`${result}`).fadeIn().fadeOut(6000);
   });
+
   const homePage = $(".home");
   const formPage = $(".contact-form");
   const contactListContainer = document.querySelector(".contact-list");
-  const renderUrl = "https://contact-app-erdk.onrender.com";
+  const renderUrl = null; //"https://contact-app-erdk.onrender.com";
   const baseurl = renderUrl
     ? renderUrl
     : document.URL.includes("192.168.8.1")
@@ -33,8 +35,6 @@ $(document).ready(async () => {
   const usersUrl = baseurl + "/contacts";
   const userUrl = baseurl + "/contacts/";
   const postUrl = baseurl + "/contact";
-
-  const users = await getUsers(usersUrl);
 
   const imageInput = document.querySelector("#image-file");
   const submitBtn = document.querySelector(".save-btn");
@@ -219,7 +219,7 @@ $(document).ready(async () => {
       day || daySelect.value
     ).toLocaleDateString();
     data.dob = dob;
-    data.userId = currentUser.id;
+    data.userId = currentUser.user_id;
 
     if (!(data.firstname && data.phone))
       return showMessageBox("Error", "Add at least Conatct Name and Phone");
@@ -228,7 +228,7 @@ $(document).ready(async () => {
     if (!isUpdate) {
       const result = await addUser(postUrl, data);
       if (result.success) {
-        const users = await getUsers(usersUrl);
+        const users = await getUsers(usersUrl, currentUser.user_id);
         submitBtn.disabled = false;
         renderUsers(contactListContainer, users);
         clearInputs(formInputs);
@@ -489,7 +489,11 @@ $(document).ready(async () => {
   const userImage = document.querySelector(".header-image");
 
   /* Show Home Page */
-  renderUsers(contactListContainer, users);
+  if (currentUser) {
+    users = await getUsers(usersUrl, currentUser.user_id);
+    renderUsers(contactListContainer, users);
+  }
+
   if (currentUser) {
     homePage.show();
     $(".login-form-container").hide();
@@ -544,6 +548,8 @@ $(document).ready(async () => {
         localStorage.setItem("currentUser", JSON.stringify(currentUser));
         showCurrentUser(currentUser);
         clearInputs(loginFormInputs);
+        const users = await getUsers(usersUrl, currentUser.user_id);
+        renderUsers(contactListContainer, users);
         $(".login-form-container").hide();
         homePage.show();
         formPage.hide();

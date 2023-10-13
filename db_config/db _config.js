@@ -50,7 +50,7 @@ export function insertContact(
 ) {
   return new Promise((resolve, reject) => {
     let query = `
-      INSERT INTO contacts (user_id,firstname,lastname, email, phone, address, company, imageurl, dob, note)
+      INSERT INTO contacts (user_id, firstname, lastname, email, phone, address, company, imageurl, dob, note)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
     db.run(
@@ -79,15 +79,19 @@ export function insertContact(
 
 // Get All Contacts
 
-export function getAllContacts() {
+export function getAllContacts(userId) {
   return new Promise((resolve, reject) => {
-    db.all("SELECT * FROM contacts", [], (err, rows) => {
-      if (err) {
-        reject("Error retrieving contacts:", err.message);
-        return;
+    db.all(
+      `SELECT * FROM contacts WHERE user_id = ?`,
+      [userId],
+      (err, rows) => {
+        if (err) {
+          reject("Error retrieving contacts:", err.message);
+          return;
+        }
+        resolve(rows);
       }
-      resolve(rows);
-    });
+    );
   });
 }
 
