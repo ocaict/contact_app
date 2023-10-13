@@ -1,0 +1,39 @@
+.form-coaintainer{
+    background-color: #fff ;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    padding: 20px;
+
+    form {
+        background-color: #fff;
+        max-width: 600px;
+        margin: 10px auto;
+        h2{
+            color: darkcyan;
+            margin: 10px auto;
+        }
+        .form-group {
+          margin-bottom: 5px;
+          input {
+            width: 100%;
+            border: none;
+            outline: none;
+            border-bottom: 1px solid gray;
+            font-size: 18px;
+            padding: 5px 10px;
+            &::placeholder {
+              font-size: 18px;
+              opacity: 0.5;
+            }
+          }
+        
+        }
+        .btn-group{
+            margin: 10px auto;
+        }
+      }
+    
+}

@@ -11,13 +11,7 @@ import {
   updateUser,
 } from "./utils/module.js";
 
-const currentUser = {
-  id: 2,
-  firstname: "Mafeng",
-  lastname: "Dan",
-  email: "mafeng@gmail.com",
-  profile_image: "./images/profile2.png",
-};
+let currentUser = JSON.parse(localStorage.getItem("currentUser")) || null;
 
 $(document).ready(async () => {
   const socket = io();
@@ -29,7 +23,7 @@ $(document).ready(async () => {
   const homePage = $(".home");
   const formPage = $(".contact-form");
   const contactListContainer = document.querySelector(".contact-list");
-  const renderUrl = null; //"https://contact-app-erdk.onrender.com";
+  const renderUrl = "https://contact-app-erdk.onrender.com";
   const baseurl = renderUrl
     ? renderUrl
     : document.URL.includes("192.168.8.1")
@@ -48,6 +42,7 @@ $(document).ready(async () => {
   const closeFormBtn = document.querySelector(".close-btn");
   const contactForm = document.querySelector("#contact-form");
   const singleContactPage = $(".single-contact");
+  const loginForm = document.querySelector(".login-form-container");
   const backBtn = document.querySelector(".single-contact .back-btn");
   const contactContainer = document.querySelector(
     ".single-contact .contact-wrapper"
@@ -55,19 +50,11 @@ $(document).ready(async () => {
   const messageBox = document.querySelector(".message-box");
   const confirmMessageBox = document.querySelector(".confirm-box");
   const messageBoxOverlay = document.querySelector(".overlay");
+
   const formInputs = Array.from(contactForm.querySelectorAll("input"));
+  const loginFormInputs = Array.from(loginForm.querySelectorAll("input"));
   const noteInput = document.querySelector("textarea");
   formInputs.push(noteInput);
-
-  const userImage = document.querySelector(".header-image");
-  const showCurrentUser = (user) => {
-    userImage.src = user.profile_image;
-    userImage.title = `${user.firstname} ${user.lastname}`;
-  };
-  showCurrentUser(currentUser);
-  userImage.addEventListener("click", (e) => {
-    console.log(e.target.src);
-  });
 
   const daySelect = document.querySelector("#day");
   const monthSelect = document.querySelector("#month");
@@ -206,13 +193,21 @@ $(document).ready(async () => {
     $(".home").hide();
   });
 
+  const getInputValues = (form) => {
+    const data = {};
+    form.forEach((input) => {
+      data[input.name] = input.value;
+    });
+
+    return data;
+  };
+
+  // ADD OR UPDATE CONTACTS
   contactForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     // const formData = new FormData(contactForm)
-    let data = {};
-    formInputs.forEach((input) => {
-      data[input.name] = input.value;
-    });
+    let data = getInputValues(formInputs);
+
     if (imageurl) {
       data.imageurl = imageurl;
     } else {
@@ -237,6 +232,7 @@ $(document).ready(async () => {
         submitBtn.disabled = false;
         renderUsers(contactListContainer, users);
         clearInputs(formInputs);
+        imageurl = "";
         $(".file-label").html(
           `<p class="image-preview"><i class="fas fa-camera"></i></p`
         );
@@ -251,7 +247,7 @@ $(document).ready(async () => {
       } else {
         data.imageurl = userToUpdate.imageurl;
       }
-      console.log(data);
+
       const result = await updateUser(userUrl + userToUpdate.id, data);
       const users = await getUsers(usersUrl);
       renderUsers(contactListContainer, users);
@@ -265,13 +261,6 @@ $(document).ready(async () => {
       userToUpdate = null;
     }
   });
-
-  renderUsers(contactListContainer, users);
-
-  /* Show Home Page */
-  homePage.show();
-  formPage.hide();
-  singleContactPage.hide();
 
   backBtn.addEventListener("click", () => {
     formPage.hide();
@@ -488,6 +477,84 @@ $(document).ready(async () => {
     contact.addEventListener("mouseup", (e) => {
       clearInterval(interval);
     });
+  });
+
+  // User LOGICS
+
+  const showCurrentUser = (user) => {
+    if (!user) return;
+    userImage.src = user.imageurl || "./images/profile2.png";
+    userImage.title = ` ${user?.username}`;
+  };
+  const userImage = document.querySelector(".header-image");
+
+  /* Show Home Page */
+  renderUsers(contactListContainer, users);
+  if (currentUser) {
+    homePage.show();
+    $(".login-form-container").hide();
+    formPage.hide();
+    singleContactPage.hide();
+    showCurrentUser(currentUser);
+  } else {
+    $(".login-form-container").show();
+    homePage.hide();
+    formPage.hide();
+    singleContactPage.hide();
+  }
+
+  userImage.addEventListener("click", (e) => {
+    localStorage.removeItem("currentUser");
+    $(".login-form-container").show();
+    homePage.hide();
+    formPage.hide();
+    singleContactPage.hide();
+  });
+  // Login logic
+  function isValidEmail(email) {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+  }
+  function isCorrectUsername(username) {
+    const usernameRegex = /^[a-zA-Z][a-zA-Z0-9]{2,9}$/;
+
+    return usernameRegex.test(username);
+  }
+
+  loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const data = getInputValues(loginFormInputs);
+
+    if (!data.username.trim() || !data.password.trim())
+      return showMessageBox("Invalid", "Username and Password Required");
+
+    if (isValidEmail(data.username) || isCorrectUsername(data.username)) {
+      try {
+        const res = await fetch(baseurl + "/user/login", {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+        const result = await res.json();
+        if (!result.success) return showMessageBox("Error", result.message);
+
+        currentUser = result.user;
+        localStorage.setItem("currentUser", JSON.stringify(currentUser));
+        showCurrentUser(currentUser);
+        clearInputs(loginFormInputs);
+        $(".login-form-container").hide();
+        homePage.show();
+        formPage.hide();
+        singleContactPage.hide();
+      } catch (error) {
+        return showMessageBox("Error", error.message);
+      }
+
+      return;
+    }
+    return showMessageBox("Invalid", "Enter a valid Username or Email");
   });
   // END OF READY
 });

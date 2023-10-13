@@ -55,14 +55,14 @@ export function addUser(
 
 // Get User by userName or Email
 
-export function getUserByUsernameOrEmailAndPassword(username, password) {
+export function getUserByUsernameOrEmailAndPassword(username) {
   return new Promise((resolve, reject) => {
     db.get(
-      "SELECT * FROM users WHERE username = ? OR email = ? AND password = ?",
-      [username, username, password],
+      "SELECT * FROM users WHERE username = ? OR email = ? ",
+      [username, username],
       (err, row) => {
         if (err) {
-          reject("Error retrieving user:", err.message);
+          reject("Error retrieving user:", err.message, err);
           return;
         }
         resolve(row);

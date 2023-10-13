@@ -14,7 +14,7 @@
     <div class="app">
       <div class="socket-notice hide"></div>
       <!-- Start of Home Page -->
-      <div class="home page">
+      <div class="home page hide">
         <header class="header">
           <div class="menu-icon"><i class="fas fa-bars"></i></div>
           <div class="search-wrapper">
@@ -203,6 +203,39 @@
             <i class="fas fa-edit"></i> Edit contact
           </button> -->
         </div>
+      </div>
+
+      <!-- LOGIN FORM -->
+
+      <div class="form-coaintainer login-form-container hide">
+        <form action="">
+          <h2>Log In</h2>
+          <div class="form-group">
+            <label for="username">Enter Username or Email</label>
+            <input
+              type="text"
+              name="username"
+              id="username"
+              placeholder="Username/Email"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="Password"
+            />
+          </div>
+
+          <div class="btn-group">
+            <button type="submit" class="btn pad btn-primary round">
+              Log In
+            </button>
+          </div>
+        </form>
       </div>
 
       <!-- Message Dialog Boxes -->

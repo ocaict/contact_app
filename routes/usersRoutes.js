@@ -119,10 +119,28 @@ export const addUserRoute = async (req, res) => {
 };
 
 export const getUserRoute = async (req, res) => {
+  const { username, password } = req.body;
+
+  if (!username || !password)
+    return res
+      .status(403)
+      .send({ success: false, message: "Fill Login details" });
+
   try {
-    const user = await getUserByUsernameOrEmailAndPassword("mafeng", "1234");
-    console.log(user);
+    const user = await getUserByUsernameOrEmailAndPassword(username);
+    if (!user)
+      return res
+        .status(404)
+        .send({ success: false, message: "Invalid Log In Credentials" });
+    const isCorrectPassword = await bcrypt.compare(password, user.password);
+
+    if (!isCorrectPassword)
+      return res.status(401).send({
+        success: false,
+        message: "Invalid User Credentials",
+      });
+    return res.status(200).send({ success: true, user });
   } catch (error) {
-    console.log(error);
+    res.status(500).send({ success: false, message: "Server Error" });
   }
 };
