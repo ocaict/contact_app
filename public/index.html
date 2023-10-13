@@ -207,7 +207,7 @@
 
       <!-- LOGIN FORM -->
 
-      <div class="form-coaintainer login-form-container hide">
+      <div class="form-coaintainer login-form-container page hide">
         <form action="">
           <h2>Log In</h2>
           <div class="form-group">
@@ -235,6 +235,116 @@
               Log In
             </button>
           </div>
+
+          <h3>
+            <a href="#" onclick="return false" class="signup-link">Sign Up</a>
+          </h3>
+        </form>
+      </div>
+
+      <!-- SIGN UP FORM -->
+
+      <div class="signup-form-container page hide">
+        <form class="signup-form" id="contact-form">
+          <h2>Sign Up to Get Started</h2>
+          <div class="logo-img">
+            <input
+              type="file"
+              name="user_image"
+              class="image-file"
+              id="userImage"
+              accept="image/*"
+            />
+            <!-- <img src="./images/profile.png" alt="Profile Image" /> -->
+            <label for="userImage" class="file-label">
+              <p class="image-preview"><i class="fas fa-camera"></i></p
+            ></label>
+          </div>
+
+          <div class="form-group">
+            <input
+              type="text"
+              name="username"
+              id="username"
+              placeholder="Username*"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="text"
+              name="firstname"
+              id="firstname"
+              placeholder="First name"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="text"
+              name="lastname"
+              id="lastname"
+              placeholder="Last name"
+            />
+          </div>
+          <div class="form-group">
+            <input type="email" name="email" id="email" placeholder="Email*" />
+          </div>
+
+          <div class="form-group">
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="Password*"
+            />
+          </div>
+
+          <div class="form-group">
+            <input
+              type="password"
+              name="password2"
+              id="password2"
+              placeholder="Confirm Password*"
+            />
+          </div>
+
+          <div class="form-group">
+            <input type="tel" name="phone" id="phone" placeholder="Phone" />
+          </div>
+
+          <div class="form-group">
+            <input
+              type="text"
+              name="address"
+              id="address"
+              placeholder="Address"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="text"
+              name="company"
+              id="company"
+              placeholder="Company"
+            />
+          </div>
+          <!-- jquery ui -->
+          <div class="form-group">
+            <input type="text" name="dob" id="dob" placeholder="Birth Day" />
+          </div>
+
+          <div class="form-group">
+            <textarea name="note" id="note" placeholder="Add Note"></textarea>
+          </div>
+
+          <div class="btn-group">
+            <button type="submit" class="btn pad btn-primary round">
+              Sign Up
+            </button>
+          </div>
+
+          <h3>
+            <a href="#" onclick="return false" class="login-link">Log In</a>
+          </h3>
         </form>
       </div>
 

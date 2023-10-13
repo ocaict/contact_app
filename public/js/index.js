@@ -497,11 +497,13 @@ $(document).ready(async () => {
   if (currentUser) {
     homePage.show();
     $(".login-form-container").hide();
+    $(".signup-form-container").hide();
     formPage.hide();
     singleContactPage.hide();
     showCurrentUser(currentUser);
   } else {
     $(".login-form-container").show();
+    $(".signup-form-container").hide();
     homePage.hide();
     formPage.hide();
     singleContactPage.hide();
@@ -561,6 +563,27 @@ $(document).ready(async () => {
       return;
     }
     return showMessageBox("Invalid", "Enter a valid Username or Email");
+  });
+
+  // SIGN UP LOGICS
+
+  $(".login-link").click(() => {
+    $(".signup-form-container").fadeOut();
+    $(".login-form-container").fadeIn();
+  });
+
+  $(".signup-link").click(() => {
+    $(".signup-form-container").fadeIn();
+    $(".login-form-container").fadeOut();
+  });
+
+  const signUpForm = document.querySelector(".signup-form");
+  const signFormInputs = Array.from(signUpForm.querySelectorAll("input"));
+
+  signUpForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const data = getInputValues(signFormInputs);
+    console.log(data);
   });
   // END OF READY
 });

@@ -1,0 +1,102 @@
+form {
+    background-color: #fff;
+    padding: 20px;
+    max-width: 600px;
+    margin: auto;
+    h2{
+        margin: 20px auto;
+        text-align: center;
+    }
+    .form-input-group {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-start;
+      border-bottom: 1px solid gray;
+      margin: 5px 0;
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        label {
+          opacity: 0.7;
+        }
+        input,
+        select {
+          border: 1px solid rgba(0, 0, 0, 0.2);
+          border-radius: 8px;
+          padding: 5px 20px;
+          outline: none;
+        }
+      }
+    }
+    .form-group {
+      margin-bottom: 5px;
+      input {
+        width: 100%;
+        border: none;
+        outline: none;
+        border-bottom: 1px solid gray;
+        font-size: 18px;
+        padding: 5px 10px;
+        &::placeholder {
+          font-size: 18px;
+          opacity: 0.5;
+        }
+      }
+      textarea {
+        width: 100%;
+        border: none;
+        outline: none;
+        height: 50px;
+        border-bottom: 1px solid gray;
+        padding: 5px 10px;
+        font-size: 18px;
+        resize: none;
+        &::placeholder {
+          font-size: 18px;
+          opacity: 0.5;
+        }
+      }
+    }
+
+    .logo-img {
+        background-color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        padding: 50px;
+        .image-file {
+          width: 0;
+          height: 0;
+          overflow: hidden;
+        }
+        p {
+          height: 50px;
+          width: 50px;
+          background-color: blue;
+          border-radius: 50%;
+          font-weight: bold;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          align-content: center;
+          img {
+            width: 100%;
+            height: 100%;
+          }
+          .fas {
+            color: #fff;
+            font-size: 20px;
+          }
+        }
+        img {
+          height: 80px;
+          width: 80px;
+          border-radius: 50%;
+          display: block;
+          margin: auto;
+          object-fit: cover;
+        }
+      }
+  }
