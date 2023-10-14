@@ -26,6 +26,8 @@ $(document).ready(async () => {
   const homePage = $(".home");
   const formPage = $(".contact-form");
   const contactListContainer = document.querySelector(".contact-list");
+
+  const isLogin = false;
   const renderUrl = "https://contact-app-erdk.onrender.com";
   const baseurl = renderUrl
     ? renderUrl
