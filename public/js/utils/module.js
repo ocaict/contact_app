@@ -124,3 +124,22 @@ export const getBirthDay = (dob = "1990,1,12") => {
   const birthday = new Date(nextBirthday).toDateString();
   return birthday;
 };
+
+// Add App User
+export const addAppUser = async (baseurl, user) => {
+  try {
+    const res = await fetch(`${baseurl}/user`, {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    });
+
+    // if (!res.ok) throw new Error("Unable to add User!!");
+    const result = await res.json();
+    return { result };
+  } catch (error) {
+    return { error };
+  }
+};

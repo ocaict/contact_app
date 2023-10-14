@@ -1,4 +1,5 @@
 import {
+  addAppUser,
   addUser,
   clearInputs,
   deleteUser,
@@ -61,10 +62,10 @@ $(document).ready(async () => {
   const yearSelect = document.querySelector("#year");
 
   // Handle Message Boxes
-  const showMessageBox = (title, body) => {
+  const showMessageBox = (title, body, className = "") => {
     messageBox.innerHTML = `
-    <h2 class="title">${title}</h2>
-    <p class="body">${body}</p>
+    <h2 class="title ${className}">${title}</h2>
+    <p class="body ${className}">${body}</p>
     <div class="btn-group">
       <button class="btn btn-success close-message-btn">Ok</button>
     </div>
@@ -222,7 +223,11 @@ $(document).ready(async () => {
     data.userId = currentUser.user_id;
 
     if (!(data.firstname && data.phone))
-      return showMessageBox("Error", "Add at least Conatct Name and Phone");
+      return showMessageBox(
+        "Error",
+        "Add at least Conatct Name and Phone",
+        "error"
+      );
     submitBtn.disabled = true;
     // Add New Contact
     if (!isUpdate) {
@@ -532,7 +537,11 @@ $(document).ready(async () => {
     const data = getInputValues(loginFormInputs);
 
     if (!data.username.trim() || !data.password.trim())
-      return showMessageBox("Invalid", "Username and Password Required");
+      return showMessageBox(
+        "Invalid",
+        "Username and Password Required",
+        "error"
+      );
 
     if (isValidEmail(data.username) || isCorrectUsername(data.username)) {
       try {
@@ -544,7 +553,8 @@ $(document).ready(async () => {
           body: JSON.stringify(data),
         });
         const result = await res.json();
-        if (!result.success) return showMessageBox("Error", result.message);
+        if (!result.success)
+          return showMessageBox("Error", result.message, "error");
 
         currentUser = result.user;
         localStorage.setItem("currentUser", JSON.stringify(currentUser));
@@ -557,12 +567,16 @@ $(document).ready(async () => {
         formPage.hide();
         singleContactPage.hide();
       } catch (error) {
-        return showMessageBox("Error", error.message);
+        return showMessageBox("Error", error.message, "error");
       }
 
       return;
     }
-    return showMessageBox("Invalid", "Enter a valid Username or Email");
+    return showMessageBox(
+      "Invalid",
+      "Enter a valid Username or Email",
+      "error"
+    );
   });
 
   // SIGN UP LOGICS
@@ -578,13 +592,30 @@ $(document).ready(async () => {
   });
 
   const signUpForm = document.querySelector(".signup-form");
-  const signFormInputs = Array.from(signUpForm.querySelectorAll("input"));
+  const signupFormInputs = Array.from(signUpForm.querySelectorAll("input"));
 
-  signUpForm.addEventListener("submit", (e) => {
+  signUpForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const data = getInputValues(signFormInputs);
-    console.log(data);
+    const userData = getInputValues(signupFormInputs);
+
+    if (
+      !userData.username.trim() ||
+      !userData.email.trim() ||
+      !userData.password.trim() ||
+      !userData.password2.trim()
+    )
+      return showMessageBox("Error", "Fill All Required Fields", "error");
+    if (userData.password !== userData.password2)
+      return showMessageBox("Incorret!", "Passwords mismatched!!");
+    const { error, result } = await addAppUser(baseurl, userData);
+    if (error) return showMessageBox("Error!", error.message, "error");
+    if (!result.success) return showMessageBox("Info", result.message, "info");
+
+    clearInputs(signupFormInputs);
+    $(".signup-form-container").fadeOut();
+    $(".login-form-container").fadeIn();
   });
+
   // END OF READY
 });
 // END OF READY

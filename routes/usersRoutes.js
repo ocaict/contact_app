@@ -109,6 +109,17 @@ export const addUserRoute = async (req, res) => {
         success: false,
         message: `User with email or username already exist`,
       });
+
+    const token = crypto.randomBytes(32).toString("hex");
+    usersTokens.push({ username, token });
+
+    // const emailResult = await sendEmail({
+    //   to: email,
+    //   subject: "Verify Your Acount",
+    //   html: getHTML("https://contact-app-erdk.onrender.com", username, token),
+    // });
+
+    // console.log("Email Result", emailResult);
     const result = await addUser(
       username,
       firsname,
@@ -120,16 +131,7 @@ export const addUserRoute = async (req, res) => {
       imageurl,
       dob
     );
-
-    const token = crypto.randomBytes(32).toString("hex");
-    usersTokens.push({ username, token });
-
-    const emailResult = await sendEmail({
-      to: email,
-      subject: "Verify Your Acount",
-      html: getHTML("https://contact-app-erdk.onrender.com", username, token),
-    });
-    console.log(emailResult);
+    console.log(result);
     return res.status(201).send({
       success: true,
       message: "Please Verify Your Email",

@@ -217,6 +217,7 @@
               name="username"
               id="username"
               placeholder="Username/Email"
+              autocomplete="username"
             />
           </div>
 
@@ -227,6 +228,7 @@
               name="password"
               id="password"
               placeholder="Password"
+              autocomplete="current-password"
             />
           </div>
 
@@ -245,7 +247,7 @@
       <!-- SIGN UP FORM -->
 
       <div class="signup-form-container page hide">
-        <form class="signup-form" id="contact-form">
+        <form class="signup-form" id="user-contact-form">
           <h2>Sign Up to Get Started</h2>
           <div class="logo-img">
             <input
@@ -265,7 +267,7 @@
             <input
               type="text"
               name="username"
-              id="username"
+              id="user-username"
               placeholder="Username*"
             />
           </div>
@@ -273,7 +275,7 @@
             <input
               type="text"
               name="firstname"
-              id="firstname"
+              id="user-firstname"
               placeholder="First name"
             />
           </div>
@@ -281,20 +283,27 @@
             <input
               type="text"
               name="lastname"
-              id="lastname"
+              id="user-lastname"
               placeholder="Last name"
             />
           </div>
           <div class="form-group">
-            <input type="email" name="email" id="email" placeholder="Email*" />
+            <input
+              type="email"
+              name="email"
+              id="user-email"
+              placeholder="Email*"
+              autocomplete="username"
+            />
           </div>
 
           <div class="form-group">
             <input
               type="password"
               name="password"
-              id="password"
+              id="user-password"
               placeholder="Password*"
+              autocomplete="new-password"
             />
           </div>
 
@@ -304,18 +313,24 @@
               name="password2"
               id="password2"
               placeholder="Confirm Password*"
+              autocomplete="new-password"
             />
           </div>
 
           <div class="form-group">
-            <input type="tel" name="phone" id="phone" placeholder="Phone" />
+            <input
+              type="tel"
+              name="phone"
+              id="user-phone"
+              placeholder="Phone"
+            />
           </div>
 
           <div class="form-group">
             <input
               type="text"
               name="address"
-              id="address"
+              id="user-address"
               placeholder="Address"
             />
           </div>
@@ -323,17 +338,26 @@
             <input
               type="text"
               name="company"
-              id="company"
+              id="user-company"
               placeholder="Company"
             />
           </div>
           <!-- jquery ui -->
           <div class="form-group">
-            <input type="text" name="dob" id="dob" placeholder="Birth Day" />
+            <input
+              type="text"
+              name="dob"
+              id="user-dob"
+              placeholder="Birth Day"
+            />
           </div>
 
           <div class="form-group">
-            <textarea name="note" id="note" placeholder="Add Note"></textarea>
+            <textarea
+              name="note"
+              id="user-note"
+              placeholder="Add Note"
+            ></textarea>
           </div>
 
           <div class="btn-group">
