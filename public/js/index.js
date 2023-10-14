@@ -486,12 +486,12 @@ $(document).ready(async () => {
 
   // User LOGICS
 
+  const userImage = document.querySelector(".header-image");
   const showCurrentUser = (user) => {
     if (!user) return;
     userImage.src = user.imageurl || "./images/profile2.png";
     userImage.title = ` ${user?.username}`;
   };
-  const userImage = document.querySelector(".header-image");
 
   /* Show Home Page */
   if (currentUser) {
@@ -581,6 +581,27 @@ $(document).ready(async () => {
 
   // SIGN UP LOGICS
 
+  // Get User Image
+  let userProfileImage = null;
+  const userImageInput = document.querySelector("#user-image");
+  const userImagePreview = document.querySelector(
+    ".signup-form-container .image-preview"
+  );
+
+  userImageInput.addEventListener("change", (e) => {
+    let file = e.target.files[0];
+    const fileReader = new FileReader();
+    fileReader.onloadend = function () {
+      userProfileImage = this.result;
+      const image = document.createElement("img");
+      image.src = userProfileImage;
+      userImagePreview.innerHTML = "";
+      userImagePreview.appendChild(image);
+      userImagePreview.style.background = "transparent";
+    };
+    fileReader.readAsDataURL(file);
+  });
+
   $(".login-link").click(() => {
     $(".signup-form-container").fadeOut();
     $(".login-form-container").fadeIn();
@@ -607,11 +628,16 @@ $(document).ready(async () => {
       return showMessageBox("Error", "Fill All Required Fields", "error");
     if (userData.password !== userData.password2)
       return showMessageBox("Incorret!", "Passwords mismatched!!");
+    if (userProfileImage) {
+      userData.imageurl = userProfileImage;
+    }
     const { error, result } = await addAppUser(baseurl, userData);
     if (error) return showMessageBox("Error!", error.message, "error");
     if (!result.success) return showMessageBox("Info", result.message, "info");
 
+    userImagePreview.innerHTML = `<i class="fas fa-user"></i>`;
     clearInputs(signupFormInputs);
+    userProfileImage = null;
     $(".signup-form-container").fadeOut();
     $(".login-form-container").fadeIn();
   });
